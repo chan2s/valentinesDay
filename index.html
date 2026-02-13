@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Valentine's Day 💝</title>
+    <title>Happy Valentine's Day</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap"
         rel="stylesheet">
@@ -958,10 +958,186 @@
                 opacity: 1;
             }
         }
+
+        /* Drag-over glow — removed (no upload needed) */
+        .music-player {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(26, 5, 16, 0.82);
+            border: 1px solid rgba(192, 41, 74, 0.4);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 8px 16px 8px 10px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+            pointer-events: none;
+        }
+
+        .music-player.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .music-player:hover {
+            background: rgba(40, 8, 24, 0.95);
+            border-color: rgba(192, 41, 74, 0.7);
+        }
+
+        .music-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--rose), #8b1a30);
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 8px rgba(192, 41, 74, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            flex-shrink: 0;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 14px rgba(192, 41, 74, 0.7);
+        }
+
+        .music-btn:active {
+            transform: scale(0.95);
+        }
+
+        .music-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 140px;
+            overflow: hidden;
+        }
+
+        .music-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.75rem;
+            color: #fce4ec;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .music-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 12px;
+        }
+
+        .music-bar {
+            width: 3px;
+            background: var(--rose);
+            border-radius: 2px;
+            transform-origin: bottom;
+            animation: bar-dance 0.6s ease-in-out infinite alternate;
+        }
+
+        .music-bar:nth-child(1) {
+            animation-duration: 0.5s;
+            height: 6px;
+        }
+
+        .music-bar:nth-child(2) {
+            animation-duration: 0.7s;
+            height: 10px;
+            animation-delay: 0.1s;
+        }
+
+        .music-bar:nth-child(3) {
+            animation-duration: 0.4s;
+            height: 8px;
+            animation-delay: 0.2s;
+        }
+
+        .music-bar:nth-child(4) {
+            animation-duration: 0.6s;
+            height: 12px;
+            animation-delay: 0.05s;
+        }
+
+        .music-bar:nth-child(5) {
+            animation-duration: 0.55s;
+            height: 7px;
+            animation-delay: 0.15s;
+        }
+
+        @keyframes bar-dance {
+            from {
+                transform: scaleY(0.3);
+                opacity: 0.6;
+            }
+
+            to {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        .music-bars.paused .music-bar {
+            animation-play-state: paused;
+        }
+
+        .music-volume {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 55px;
+            height: 3px;
+            border-radius: 3px;
+            background: rgba(192, 41, 74, 0.35);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .music-volume::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--rose);
+            cursor: pointer;
+            box-shadow: 0 0 4px rgba(192, 41, 74, 0.7);
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Music Player UI (shown after gift opens) -->
+    <div class="music-player" id="musicPlayer">
+        <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Play/Pause">▶</button>
+        <div class="music-info">
+            <span class="music-title" id="musicTitle">♪ Our Song</span>
+            <div class="music-bars paused" id="musicBars">
+                <div class="music-bar"></div>
+                <div class="music-bar"></div>
+                <div class="music-bar"></div>
+                <div class="music-bar"></div>
+                <div class="music-bar"></div>
+            </div>
+        </div>
+        <input class="music-volume" id="volumeSlider" type="range" min="0" max="100" value="80" title="Volume"
+            oninput="setVolume(this.value)">
+    </div>
+
+    <!-- Audio — place the mp3 in the same folder as this HTML file -->
+    <audio id="bgAudio" loop src="ssstik.io_@mixygu_1770993239323.mp3"></audio>
 
     <!-- Particle background -->
     <div class="bg-particles" id="bgParticles"></div>
@@ -1074,7 +1250,7 @@
             </div>
         </div>
 
-        <!-- <p class="love-message">For you, with all my heart 🌹<br>You make every day sweeter.</p> -->
+        <p class="love-message">For you, with all my heart 🌹<br>You make every day sweeter.</p>
 
         <button class="back-btn" onclick="resetScene()">← Open Again</button>
     </div>
@@ -1135,17 +1311,79 @@
             }
         }
 
-        // ===== Open box =====
+        // =========================================================
+        // ===== MUSIC =====
+        // =========================================================
+        const audio = document.getElementById('bgAudio');
+        audio.volume = 0.8;
+
+        function playMusic() {
+            audio.play().catch(() => {
+                // Autoplay blocked — user interaction needed (already handled via box click)
+            });
+        }
+
+        function stopMusic() {
+            // Smooth fade out
+            const startVol = audio.volume;
+            const steps = 20;
+            const stepTime = 400 / steps;
+            let step = 0;
+            const fade = setInterval(() => {
+                step++;
+                audio.volume = Math.max(0, startVol * (1 - step / steps));
+                if (step >= steps) {
+                    clearInterval(fade);
+                    audio.pause();
+                    audio.currentTime = 0;   // rewind for next open
+                    audio.volume = startVol; // restore volume
+                    updateMusicUI(false);
+                }
+            }, stepTime);
+            updateMusicUI(false);
+        }
+
+        function toggleMusic() {
+            if (!audio.paused) {
+                audio.pause();
+                updateMusicUI(false);
+            } else {
+                playMusic();
+                updateMusicUI(true);
+            }
+        }
+
+        function setVolume(val) {
+            audio.volume = val / 100;
+        }
+
+        function updateMusicUI(playing) {
+            const btn = document.getElementById('musicBtn');
+            const bars = document.getElementById('musicBars');
+            if (playing) {
+                btn.textContent = '⏸';
+                bars.classList.remove('paused');
+            } else {
+                btn.textContent = '▶';
+                bars.classList.add('paused');
+            }
+        }
+
+        // Keep UI in sync if audio ends or is paused externally
+        audio.addEventListener('play', () => updateMusicUI(true));
+        audio.addEventListener('pause', () => updateMusicUI(false));
+
+        // =========================================================
+        // ===== SCENE LOGIC =====
+        // =========================================================
         function openBox() {
             const box = document.getElementById('giftBox');
             if (box.classList.contains('opened')) return;
             box.classList.add('opened');
 
-            // Burst hearts from box center
             const rect = box.getBoundingClientRect();
             burstHearts(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
-            // Hide initial scene, show reveal
             setTimeout(() => {
                 document.getElementById('openPrompt').classList.add('hide');
             }, 200);
@@ -1154,16 +1392,22 @@
                 document.getElementById('initialScene').style.opacity = '0';
                 document.getElementById('initialScene').style.transition = 'opacity 0.6s';
                 document.getElementById('revealScene').classList.add('show');
+                // Show music player & start music
+                document.getElementById('musicPlayer').classList.add('visible');
+                playMusic();
+                updateMusicUI(true);
             }, 700);
         }
 
-        // ===== Reset =====
         function resetScene() {
             const box = document.getElementById('giftBox');
             box.classList.remove('opened');
             document.getElementById('openPrompt').classList.remove('hide');
             document.getElementById('initialScene').style.opacity = '1';
             document.getElementById('revealScene').classList.remove('show');
+            // Hide player & stop music
+            document.getElementById('musicPlayer').classList.remove('visible');
+            stopMusic();
         }
 
         // ===== Chocolate click pop =====
