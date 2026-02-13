@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day 💝</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --rose: #c0294a;
+            --blush: #f2a7bb;
+            --petal: #e8607a;
+            --cream: #fdf4f0;
+            --gold: #c9933e;
+            --choco: #3b1c0e;
+            --choco-mid: #6b3a22;
+            --choco-light: #a0623c;
+            --choco-sheen: #d4895a;
+            --leaf: #3a7d44;
+            --leaf-dark: #1e5229;
+            --stem: #4a8c4e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a0510;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Particle background */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(192, 41, 74, 0.25);
+            animation: float-up linear infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Scene container */
+        .scene {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Prompt text */
+        .prompt {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #f5c6d0;
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            letter-spacing: 0.05em;
+            opacity: 1;
+            transition: opacity 0.6s ease;
+            text-shadow: 0 0 20px rgba(192, 41, 74, 0.6);
+        }
+
+        .prompt.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* ===== BOX ===== */
+        .box-wrapper {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .box-wrapper:hover {
+            transform: scale(1.04);
+        }
+
+        .box-wrapper:active {
+            transform: scale(0.97);
+        }
+
+        .box-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 180px;
+            height: 140px;
+            background: linear-gradient(135deg, var(--rose) 0%, #8b1a30 100%);
+            border-radius: 6px 6px 8px 8px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        .box-body::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .box-body::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-50%);
+        }
+
+        /* Ribbon vertical */
+        .ribbon-v {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 22px;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, #f5c6d0 0%, #fff 40%, #f5c6d0 100%);
+            opacity: 0.85;
+            z-index: 2;
+        }
+
+        /* Ribbon horizontal */
+        .ribbon-h {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 22px;
+            transform: translateY(-50%);
+            background: linear-gradient(to bottom, #f5c6d0 0%, #fff 40%, #f5c6d0 100%);
+            opacity: 0.85;
+            z-index: 2;
+        }
+
+        .box-lid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 180px;
+            height: 55px;
+            background: linear-gradient(135deg, #d63455 0%, #9e1f3c 100%);
+            border-radius: 6px 6px 2px 2px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform-origin: top center;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .box-lid::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 22px;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, #f5c6d0 0%, #fff 40%, #f5c6d0 100%);
+            opacity: 0.85;
+        }
+
+        /* Bow */
+        .bow {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 50px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .bow-left,
+        .bow-right {
+            position: absolute;
+            width: 36px;
+            height: 30px;
+            background: linear-gradient(135deg, #ffe0ea 0%, #ffb3c6 50%, #ff8fab 100%);
+            border-radius: 50% 0 50% 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .bow-left {
+            left: 2px;
+            top: 8px;
+            transform: rotate(-30deg);
+        }
+
+        .bow-right {
+            right: 2px;
+            top: 8px;
+            transform: rotate(30deg) scaleX(-1);
+        }
+
+        .bow-center {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, #ffe0ea 30%, #ff8fab 100%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+
+        .bow-tail-l,
+        .bow-tail-r {
+            position: absolute;
+            width: 12px;
+            height: 24px;
+            background: linear-gradient(to bottom, #ffb3c6, #ff8fab);
+            bottom: -10px;
+            border-radius: 0 0 6px 6px;
+        }
+
+        .bow-tail-l {
+            left: 30px;
+            transform: rotate(-15deg);
+        }
+
+        .bow-tail-r {
+            right: 28px;
+            transform: rotate(15deg);
+        }
+
+        .box-wrapper.opened .box-lid {
+            transform: rotateX(-120deg);
+        }
+
+        .box-wrapper.opened .bow {
+            transition: transform 0.8s, opacity 0.5s;
+            transform: translateX(-50%) translateY(-30px) rotateX(-120deg);
+            opacity: 0;
+        }
+
+        /* ===== REVEAL STAGE ===== */
+        .reveal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease 0.5s;
+        }
+
+        .reveal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Heart burst particles */
+        .heart-burst {
+            position: fixed;
+            font-size: 1.5rem;
+            animation: heart-fly 1.4s ease-out forwards;
+            z-index: 25;
+            pointer-events: none;
+        }
+
+        @keyframes heart-fly {
+            0% {
+                transform: translate(0, 0) scale(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            60% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: var(--end-transform) scale(1.4) rotate(var(--rot));
+                opacity: 0;
+            }
+        }
+
+        /* Title */
+        .vday-title {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            color: #fce4ec;
+            text-shadow: 0 0 40px rgba(192, 41, 74, 0.9), 0 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.04em;
+            animation: title-in 1s ease 0.8s both;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        @keyframes title-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ===== FLOWER ===== */
+        .flower-container {
+            position: relative;
+            width: 220px;
+            height: 260px;
+            margin: 0 auto;
+        }
+
+        /* Stem */
+        .stem {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 0;
+            background: linear-gradient(to top, var(--leaf-dark), var(--stem));
+            border-radius: 4px;
+            animation: grow-stem 0.8s ease 1.2s forwards;
+            transform-origin: bottom center;
+        }
+
+        @keyframes grow-stem {
+            from {
+                height: 0;
+            }
+
+            to {
+                height: 140px;
+            }
+        }
+
+        /* Leaves */
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 28px;
+            border-radius: 50% 0 50% 0;
+            animation-fill-mode: both;
+        }
+
+        .leaf-left {
+            background: linear-gradient(135deg, var(--leaf) 0%, var(--leaf-dark) 100%);
+            bottom: 60px;
+            left: calc(50% - 55px);
+            transform-origin: right center;
+            transform: scaleX(0);
+            animation: leaf-grow-left 0.6s ease 2s forwards;
+        }
+
+        .leaf-right {
+            background: linear-gradient(225deg, var(--leaf) 0%, var(--leaf-dark) 100%);
+            bottom: 85px;
+            left: calc(50% + 5px);
+            transform-origin: left center;
+            transform: scaleX(0) scaleY(-1);
+            animation: leaf-grow-right 0.6s ease 2.3s forwards;
+        }
+
+        @keyframes leaf-grow-left {
+            from {
+                transform: scaleX(0);
+            }
+
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes leaf-grow-right {
+            from {
+                transform: scaleX(0) scaleY(-1);
+            }
+
+            to {
+                transform: scaleX(1) scaleY(-1);
+            }
+        }
+
+        /* Flower head */
+        .flower-head {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            width: 160px;
+            height: 160px;
+            animation: flower-bloom 1s cubic-bezier(0.34, 1.56, 0.64, 1) 2.6s forwards;
+        }
+
+        @keyframes flower-bloom {
+            0% {
+                transform: translateX(-50%) scale(0) rotate(-30deg);
+            }
+
+            70% {
+                transform: translateX(-50%) scale(1.1) rotate(5deg);
+            }
+
+            100% {
+                transform: translateX(-50%) scale(1) rotate(0deg);
+            }
+        }
+
+        /* Petals */
+        .petal {
+            position: absolute;
+            width: 55px;
+            height: 75px;
+            border-radius: 50% 50% 40% 40%;
+            top: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            background: var(--petal-color, #e8607a);
+            box-shadow: inset 0 -8px 16px rgba(0, 0, 0, 0.15), inset 0 4px 10px rgba(255, 255, 255, 0.3);
+            margin-left: -27.5px;
+            margin-top: -75px;
+            animation: petal-wave 3s ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+
+        .petal::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 30%;
+            width: 30%;
+            height: 55%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: rotate(-10deg);
+        }
+
+        @keyframes petal-wave {
+
+            0%,
+            100% {
+                transform: rotate(var(--base-rot)) scaleX(1);
+            }
+
+            50% {
+                transform: rotate(calc(var(--base-rot) + 3deg)) scaleX(1.03);
+            }
+        }
+
+        .petal:nth-child(1) {
+            --base-rot: 0deg;
+            --petal-color: #e8607a;
+            --delay: 0s;
+        }
+
+        .petal:nth-child(2) {
+            --base-rot: 40deg;
+            --petal-color: #d94f6b;
+            --delay: 0.2s;
+        }
+
+        .petal:nth-child(3) {
+            --base-rot: 80deg;
+            --petal-color: #e87090;
+            --delay: 0.4s;
+        }
+
+        .petal:nth-child(4) {
+            --base-rot: 120deg;
+            --petal-color: #d94f6b;
+            --delay: 0.6s;
+        }
+
+        .petal:nth-child(5) {
+            --base-rot: 160deg;
+            --petal-color: #e8607a;
+            --delay: 0.8s;
+        }
+
+        .petal:nth-child(6) {
+            --base-rot: 200deg;
+            --petal-color: #e87090;
+            --delay: 1.0s;
+        }
+
+        .petal:nth-child(7) {
+            --base-rot: 240deg;
+            --petal-color: #d94f6b;
+            --delay: 0.3s;
+        }
+
+        .petal:nth-child(8) {
+            --base-rot: 280deg;
+            --petal-color: #e8607a;
+            --delay: 0.7s;
+        }
+
+        .petal:nth-child(9) {
+            --base-rot: 320deg;
+            --petal-color: #e87090;
+            --delay: 0.5s;
+        }
+
+        /* Inner petals */
+        .petal-inner {
+            position: absolute;
+            width: 38px;
+            height: 50px;
+            border-radius: 50% 50% 40% 40%;
+            top: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            margin-left: -19px;
+            margin-top: -50px;
+            box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.1), inset 0 3px 8px rgba(255, 255, 255, 0.35);
+            animation: petal-wave 3s ease-in-out infinite;
+            animation-delay: var(--delay, 0.15s);
+        }
+
+        .petal-inner:nth-child(10) {
+            --base-rot: 20deg;
+            background: #f2a0b8;
+            --delay: 0.1s;
+        }
+
+        .petal-inner:nth-child(11) {
+            --base-rot: 80deg;
+            background: #f0909c;
+            --delay: 0.5s;
+        }
+
+        .petal-inner:nth-child(12) {
+            --base-rot: 140deg;
+            background: #f2a0b8;
+            --delay: 0.9s;
+        }
+
+        .petal-inner:nth-child(13) {
+            --base-rot: 200deg;
+            background: #f0909c;
+            --delay: 0.3s;
+        }
+
+        .petal-inner:nth-child(14) {
+            --base-rot: 260deg;
+            background: #f2a0b8;
+            --delay: 0.7s;
+        }
+
+        .petal-inner:nth-child(15) {
+            --base-rot: 320deg;
+            background: #f0909c;
+            --delay: 0.4s;
+        }
+
+        /* Center */
+        .flower-center {
+            position: absolute;
+            width: 42px;
+            height: 42px;
+            background: radial-gradient(circle at 35% 35%, #ffe066 0%, #f5c518 50%, #c9933e 100%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3), inset 0 -3px 6px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+            animation: center-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes center-pulse {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(255, 224, 102, 0.4);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.06);
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3), 0 0 0 10px rgba(255, 224, 102, 0);
+            }
+        }
+
+        .flower-center::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+        }
+
+        /* Sparkles on flower */
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #ffe8a0;
+            border-radius: 50%;
+            animation: sparkle-anim 2s ease-in-out infinite;
+            animation-delay: var(--sp-delay, 0s);
+        }
+
+        @keyframes sparkle-anim {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        /* ===== CHOCOLATES ===== */
+        .chocolate-box {
+            display: flex;
+            gap: 14px;
+            animation: choco-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 3.6s both;
+        }
+
+        @keyframes choco-in {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.7);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .choco {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .choco:hover {
+            transform: translateY(-5px) rotate(-3deg);
+        }
+
+        .choco:hover .choco-shine {
+            opacity: 0.9;
+        }
+
+        /* Heart chocolate */
+        .choco-heart svg {
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+            animation: choco-wobble 4s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes choco-wobble {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(-4deg);
+            }
+
+            75% {
+                transform: rotate(4deg);
+            }
+        }
+
+        /* Round chocolate */
+        .choco-round {
+            width: 54px;
+            height: 54px;
+            background: radial-gradient(circle at 35% 30%, var(--choco-light) 0%, var(--choco-mid) 50%, var(--choco) 100%);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 -4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choco-round::before {
+            content: '';
+            position: absolute;
+            top: 12%;
+            left: 20%;
+            width: 35%;
+            height: 25%;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            transform: rotate(-30deg);
+        }
+
+        /* Square chocolate */
+        .choco-square {
+            width: 54px;
+            height: 54px;
+            background: linear-gradient(145deg, var(--choco-mid) 0%, var(--choco) 60%, #1a0a04 100%);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choco-square::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .choco-square::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .choco-shine {
+            position: absolute;
+            top: 10%;
+            left: 12%;
+            width: 35%;
+            height: 20%;
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 50%;
+            transform: rotate(-25deg);
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        /* Pink truffle */
+        .choco-truffle {
+            width: 50px;
+            height: 54px;
+            background: radial-gradient(circle at 40% 30%, #e8a0b8 0%, #c06080 50%, #8b3050 100%);
+            border-radius: 50% 50% 45% 45%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 -4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choco-truffle::before {
+            content: '';
+            position: absolute;
+            top: 12%;
+            left: 20%;
+            width: 30%;
+            height: 20%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: rotate(-20deg);
+        }
+
+        .choco-label {
+            text-align: center;
+            font-size: 0.55rem;
+            color: rgba(255, 200, 180, 0.7);
+            margin-top: 4px;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Message */
+        .love-message {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: rgba(252, 228, 236, 0.85);
+            font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+            text-align: center;
+            letter-spacing: 0.04em;
+            animation: msg-in 1s ease 4.4s both;
+            text-shadow: 0 0 20px rgba(192, 41, 74, 0.5);
+            max-width: 320px;
+            line-height: 1.7;
+        }
+
+        @keyframes msg-in {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating petals background */
+        .floating-petal {
+            position: fixed;
+            font-size: 1.2rem;
+            animation: petal-fall linear infinite;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+        }
+
+        @keyframes petal-fall {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(540deg);
+                opacity: 0;
+            }
+        }
+
+        /* Glow ring behind flower */
+        .glow-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(232, 96, 122, 0.25) 0%, transparent 70%);
+            animation: ring-appear 1s ease 2.5s forwards;
+            pointer-events: none;
+        }
+
+        @keyframes ring-appear {
+            from {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Back button */
+        .back-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(192, 41, 74, 0.2);
+            border: 1px solid rgba(192, 41, 74, 0.5);
+            color: #f5c6d0;
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 30;
+            animation: msg-in 1s ease 5s both;
+        }
+
+        .back-btn:hover {
+            background: rgba(192, 41, 74, 0.4);
+            border-color: rgba(192, 41, 74, 0.9);
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        /* Click hint */
+        .click-hint {
+            animation: hint-bounce 1.6s ease-in-out infinite;
+            color: rgba(245, 198, 208, 0.7);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        @keyframes hint-bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: translateY(-5px);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Particle background -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <!-- Initial scene: box -->
+    <div class="scene" id="initialScene">
+        <p class="prompt" id="openPrompt">✨ A gift awaits you ✨</p>
+        <div class="box-wrapper" id="giftBox" onclick="openBox()">
+            <div class="box-body">
+                <div class="ribbon-v"></div>
+                <div class="ribbon-h"></div>
+            </div>
+            <div class="box-lid">
+                <div class="bow">
+                    <div class="bow-left"></div>
+                    <div class="bow-right"></div>
+                    <div class="bow-center"></div>
+                    <div class="bow-tail-l"></div>
+                    <div class="bow-tail-r"></div>
+                </div>
+            </div>
+        </div>
+        <p class="click-hint">tap to open</p>
+    </div>
+
+    <!-- Reveal scene -->
+    <div class="reveal" id="revealScene">
+        <p class="vday-title">Happy Valentine's Day 💕</p>
+
+        <!-- Flower -->
+        <div class="flower-container">
+            <div class="glow-ring"></div>
+            <div class="stem"></div>
+            <div class="leaf leaf-left"></div>
+            <div class="leaf leaf-right"></div>
+            <div class="flower-head" id="flowerHead">
+                <!-- Outer petals -->
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <!-- Inner petals -->
+                <div class="petal-inner"></div>
+                <div class="petal-inner"></div>
+                <div class="petal-inner"></div>
+                <div class="petal-inner"></div>
+                <div class="petal-inner"></div>
+                <div class="petal-inner"></div>
+                <!-- Center -->
+                <div class="flower-center"></div>
+                <!-- Sparkles -->
+                <div class="sparkle" style="top:5%;left:75%;--sp-delay:0s"></div>
+                <div class="sparkle" style="top:20%;left:5%;--sp-delay:0.6s"></div>
+                <div class="sparkle" style="top:80%;left:85%;--sp-delay:1.2s"></div>
+                <div class="sparkle" style="top:90%;left:15%;--sp-delay:0.3s"></div>
+            </div>
+        </div>
+
+        <!-- Chocolates -->
+        <div class="chocolate-box">
+            <div class="choco choco-heart">
+                <svg width="56" height="52" viewBox="0 0 56 52">
+                    <defs>
+                        <radialGradient id="hg" cx="40%" cy="30%">
+                            <stop offset="0%" stop-color="#a05030" />
+                            <stop offset="50%" stop-color="#5c2010" />
+                            <stop offset="100%" stop-color="#2a0e06" />
+                        </radialGradient>
+                        <radialGradient id="hs" cx="30%" cy="25%">
+                            <stop offset="0%" stop-color="rgba(255,255,255,0.3)" />
+                            <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+                        </radialGradient>
+                    </defs>
+                    <path
+                        d="M28,48 C28,48 4,32 4,18 C4,10 10,4 18,4 C22,4 26,6.5 28,10 C30,6.5 34,4 38,4 C46,4 52,10 52,18 C52,32 28,48 28,48Z"
+                        fill="url(#hg)" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.5))" />
+                    <path
+                        d="M28,48 C28,48 4,32 4,18 C4,10 10,4 18,4 C22,4 26,6.5 28,10 C30,6.5 34,4 38,4 C46,4 52,10 52,18 C52,32 28,48 28,48Z"
+                        fill="url(#hs)" />
+                    <ellipse cx="20" cy="14" rx="5" ry="3.5" fill="rgba(255,255,255,0.18)"
+                        transform="rotate(-20,20,14)" />
+                </svg>
+                <div class="choco-label">Truffle</div>
+            </div>
+
+            <div class="choco">
+                <div class="choco-round">
+                    <div class="choco-shine"></div>
+                </div>
+                <div class="choco-label">Praline</div>
+            </div>
+
+            <div class="choco">
+                <div class="choco-square">
+                    <div class="choco-shine"></div>
+                </div>
+                <div class="choco-label">Ganache</div>
+            </div>
+
+            <div class="choco">
+                <div class="choco-truffle">
+                    <div class="choco-shine"></div>
+                </div>
+                <div class="choco-label">Rose</div>
+            </div>
+        </div>
+
+        <!-- <p class="love-message">For you, with all my heart 🌹<br>You make every day sweeter.</p> -->
+
+        <button class="back-btn" onclick="resetScene()">← Open Again</button>
+    </div>
+
+    <script>
+        // ===== Background particles =====
+        const bgParticles = document.getElementById('bgParticles');
+        for (let i = 0; i < 18; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 6 + 3;
+            p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random() * 100}%;
+      animation-duration:${6 + Math.random() * 8}s;
+      animation-delay:${Math.random() * 6}s;
+    `;
+            bgParticles.appendChild(p);
+        }
+
+        // ===== Floating petals =====
+        const petalEmoji = ['🌸', '🌺', '✿', '❀', '🌷'];
+        for (let i = 0; i < 12; i++) {
+            const fp = document.createElement('div');
+            fp.className = 'floating-petal';
+            fp.textContent = petalEmoji[Math.floor(Math.random() * petalEmoji.length)];
+            fp.style.cssText = `
+      left:${Math.random() * 100}%;
+      animation-duration:${8 + Math.random() * 10}s;
+      animation-delay:${Math.random() * 10}s;
+      font-size:${0.8 + Math.random() * 1}rem;
+    `;
+            document.body.appendChild(fp);
+        }
+
+        // ===== Heart burst =====
+        function burstHearts(x, y) {
+            const hearts = ['💕', '💖', '💗', '💓', '❤️', '💝'];
+            for (let i = 0; i < 14; i++) {
+                const h = document.createElement('div');
+                h.className = 'heart-burst';
+                h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                const angle = (i / 14) * 360 + Math.random() * 20;
+                const dist = 80 + Math.random() * 120;
+                const rad = (angle * Math.PI) / 180;
+                const ex = Math.cos(rad) * dist;
+                const ey = Math.sin(rad) * dist;
+                const rot = (Math.random() - 0.5) * 60 + 'deg';
+                h.style.cssText = `
+        left:${x}px; top:${y}px;
+        --end-transform: translate(${ex}px, ${ey}px);
+        --rot: ${rot};
+        animation-delay:${Math.random() * 0.2}s;
+        font-size:${0.9 + Math.random() * 0.8}rem;
+      `;
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 2000);
+            }
+        }
+
+        // ===== Open box =====
+        function openBox() {
+            const box = document.getElementById('giftBox');
+            if (box.classList.contains('opened')) return;
+            box.classList.add('opened');
+
+            // Burst hearts from box center
+            const rect = box.getBoundingClientRect();
+            burstHearts(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+            // Hide initial scene, show reveal
+            setTimeout(() => {
+                document.getElementById('openPrompt').classList.add('hide');
+            }, 200);
+
+            setTimeout(() => {
+                document.getElementById('initialScene').style.opacity = '0';
+                document.getElementById('initialScene').style.transition = 'opacity 0.6s';
+                document.getElementById('revealScene').classList.add('show');
+            }, 700);
+        }
+
+        // ===== Reset =====
+        function resetScene() {
+            const box = document.getElementById('giftBox');
+            box.classList.remove('opened');
+            document.getElementById('openPrompt').classList.remove('hide');
+            document.getElementById('initialScene').style.opacity = '1';
+            document.getElementById('revealScene').classList.remove('show');
+        }
+
+        // ===== Chocolate click pop =====
+        document.querySelectorAll('.choco').forEach(c => {
+            c.addEventListener('click', function (e) {
+                burstHearts(e.clientX, e.clientY);
+            });
+        });
+    </script>
+</body>
+
+</html>
